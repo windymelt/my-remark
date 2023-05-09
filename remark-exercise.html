@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+     @import url(https://fonts.googleapis.com/css?family=Biz+UDP+Gothic);
+@font-face {
+  font-family: "Berkeley Mono";
+  src: url("https://www.3qe.us/webfont/BerkeleyMono-Regular.woff2") format("woff2"),
+  url("https://www.3qe.us/webfont/BerkeleyMono-Regular.woff") format("woff");
+  }
+
+      body { font-family: 'BIZ UDPGothic'; color: #ebdbb2; }
+     .remark-slide-container { background-color: #1d2021; }
+     .remark-slide-content { background-color: #282828;  }
+      h1, h2, h3 {
+        font-family: 'BIZ UDPGothic';
+        font-weight: bold;
+      }
+     strong { color: #fb4934; }
+     em { font-weight: 700; }
+     a { font-family: 'Berkeley Mono'; color: #83a598; }
+     a:after { font-family: FontAwesome; content: '\f08e'; font-size: 70%; }
+     table { border-collapse: collapse; }
+     th { background-color: #665c54; }
+     tr { border: none; }
+     td {
+         border-right: solid 1px #665c54;
+         border-left: solid 1px #665c54;
+     }
+     .remark-code, .remark-inline-code { font-family: 'Berkeley Mono'; }
+     .remark-code-line-highlighted { background-color: #665c54; }
+     .remark-inline-code { background-color: #1d2021; color: #d3869b; padding-left: 1em; padding-right: 1em; border-radius: 0.2em; }
+    </style>
+    <script src="https://kit.fontawesome.com/ec6af8fc56.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Remarkのテストスライド
+
+---
+
+# Agenda
+
+まず、**連れていく先のホストはユーザごとに異なるおそれがある。** Mastodonは他のFediverseサービスがそうであるように連合型のシステムである。したがって、Twitterなどとは異なって中央に巨大な「マストドンサーバ」があってその中でつぶやきやリプライが飛び交うという設計ではなく、人々が自由にサーバを建ててそれらが*イイカンジ*に協調してつぶやきやリプライを転送していくという設計になっている。したがって、サーバが複数ある中で正しくintentにユーザを連れていくには、**そのユーザが使っているサーバのホスト名を取得する必要がある。**
+
+`F[_] : Monad`が必要である。
+
+You *must* obey this specification.
+
+---
+
+# bullet
+
+- foo
+- *bar*
+- **piyo**
+
+---
+
+# link
+
+Link to https://example.com/
+
+[This is another link](https://www.3qe.us/)
+
+---
+
+# Image
+
+<img src="https://www.3qe.us/yuyuko.gif" alt=""/>
+
+---
+
+# Footnote
+
+There is no footnote((foo bar buzz)).
+
+---
+
+# Scala Code
+
+```scala
+import cats.implicits._
+import cats.data.Kleisli
+
+val f = Kleisli { (n: Int) => List(n * 2, n * 3) }
+
+val pairs = List(42 -> "a", 43 -> "b", 44 -> "c")
+
+pairs.flatMap(f.first.run)
+// => List((84,a), (126,a), (86,b), (129,b), (88,c), (132,c)): scala.collection.immutable.List[scala.Tuple2[scala.Int, java.lang.String]]
+```
+
+---
+
+# JSON
+```json
+{
+  "subject": "acct:windymelt@mstdn.takuya-a.net",
+  "aliases": [
+    "https://mstdn.takuya-a.net/@windymelt",
+    "https://mstdn.takuya-a.net/users/windymelt"
+  ],
+  "links": [
+    {
+      "rel": "http://webfinger.net/rel/profile-page",
+      "type": "text/html",
+*      "href": "https://mstdn.takuya-a.net/@windymelt"
+    },
+    {
+      "rel": "self",
+      "type": "application/activity+json",
+      "href": "https://mstdn.takuya-a.net/users/windymelt"
+    },
+    {
+      "rel": "http://ostatus.org/schema/1.0/subscribe",
+      "template": "https://mstdn.takuya-a.net/authorize_interaction?uri={uri}"
+    }
+  ]
+}
+```
+
+---
+
+# table
+| a  | b  | c  |
+|:-:|:-:|:-:|
+| 12  | 34  | 56  |
+| 78  | 90  | 12  |
+
+---
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({ratio: '16:9', highlightStyle: 'gruvbox-dark', highlightLines: true });
+    </script>
+  </body>
+</html>
