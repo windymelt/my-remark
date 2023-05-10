@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>Title of Slide</title>
     <meta charset="utf-8">
     <style>
-     @import url(https://fonts.googleapis.com/css?family=Biz+UDP+Gothic);
-@font-face {
-  font-family: "Berkeley Mono";
-  src: url("https://www.3qe.us/webfont/BerkeleyMono-Regular.woff2") format("woff2"),
-  url("https://www.3qe.us/webfont/BerkeleyMono-Regular.woff") format("woff");
-  }
+      @import url(https://fonts.googleapis.com/css?family=Biz+UDP+Gothic);
+      @font-face {
+        font-family: "Berkeley Mono";
+        src: url("https://www.3qe.us/webfont/BerkeleyMono-Regular.woff2") format("woff2"),
+             url("https://www.3qe.us/webfont/BerkeleyMono-Regular.woff") format("woff");
+      }
 
       body { font-family: 'BIZ UDPGothic'; color: #ebdbb2; }
      .remark-slide-container { background-color: #1d2021; }
@@ -37,54 +37,115 @@
   </head>
   <body>
     <textarea id="source">
+class: center, middle
+
+# Remarkの紹介
+
+---
+
+# スライドツールに何使っていますか
+
+## 作成
+
+- パワポ
+- Google Slides
+- etc.
+
+## 共有
+
+- Slideshare
+- PDF化
+- etc.
+
+---
+
+# いろいろ面倒な点も
+
+- 原稿を書いてからパワポとかGoogle Slidesに写すのが面倒
+- SlideshareやSpeakerDeckの存続性
+  - 最近めちゃくちゃ広告が多くなった
+
+---
 
 class: center, middle
 
-# Remarkのテストスライド
+# Remarkの紹介
 
 ---
 
-# Agenda
+# Remarkとは？
 
-まず、**連れていく先のホストはユーザごとに異なるおそれがある。** Mastodonは他のFediverseサービスがそうであるように連合型のシステムである。したがって、Twitterなどとは異なって中央に巨大な「マストドンサーバ」があってその中でつぶやきやリプライが飛び交うという設計ではなく、人々が自由にサーバを建ててそれらが*イイカンジ*に協調してつぶやきやリプライを転送していくという設計になっている。したがって、サーバが複数ある中で正しくintentにユーザを連れていくには、**そのユーザが使っているサーバのホスト名を取得する必要がある。**
+Remarkとは、[Gnab](https://github.com/gnab)氏が開発したMarkdownベースの**スライド作成ツール**。単体のHTMLで動作し、ブラウザですぐ表示できるシンプルなスライドを生成できる。
 
-`F[_] : Monad`が必要である。
+一般のツールのように特定のファイルを編集してからHTMLに変換するのではなく、HTMLに直接Markdownを書けばそのままスライドとして表示されるという便利な仕組みになっている。
 
-You *must* obey this specification.
-
----
-
-# bullet
-
-- foo
-- *bar*
-- **piyo**
+カンファレンスの発表といったシンプルなスライドであればこれで十分。HTMLなのでカスタマイズも可能。
 
 ---
 
-# link
+# Remarkを使うには
 
-Link to https://example.com/
+以下のような最小限のHTMLを書けばすぐにスライド作成ができる:
 
-[This is another link](https://www.3qe.us/)
+```html
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;textarea id=&quot;source&quot;&gt;
+
+class: center, middle
+
+(ここにMarkdownを記述する)
+    &lt;/textarea&gt;
+    &lt;script src=&quot;https://remarkjs.com/downloads/remark-latest.min.js&quot;&gt;
+    &lt;/script&gt;
+    &lt;script&gt;var slideshow = remark.create();&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
 
 ---
 
-# Image
+# Remarkを使ったワークフロー
 
-<img src="https://www.3qe.us/yuyuko.gif" alt=""/>
-
----
-
-# Footnote
-
-There is no footnote((foo bar buzz)).
+1. Markdownで原稿を作成(もしくはRemark上で直接作業する)
+  - 好きなエディタを利用可能なのが嬉しいポイント
+1. Remarkにコピペ
+1. 終わり
 
 ---
 
-# Scala Code
+# カスタマイズ性(1)
+
+デフォルトでは以下のような仕様で表示される
+
+- 白背景に黒文字
+- アスペクト比が4:3
+- あまり今風ではない感じ
+
+---
+
+# カスタマイズ性(2)
+
+- しかし、HTMLなので自由にスタイルをカスタマイズできるし、`remark.create()`に渡すオプションによってアスペクト比も変更できる
+  - `remark.create({'ratio': '16:9'})`
+- このスライドもCSSを少し書いたHTMLでremarkを動作させている
+  - [Gruvbox](https://github.com/morhetz/gruvbox)テーマにしている
+
+---
+
+# Highlight.jsとの統合
+
+[Highlight.js](https://highlightjs.org/)とは、コードスニペットを表示するためのJSライブラリ。`textarea`に特定のクラスを付けるとシンタックスハイライトしてくれる。
+
+Remarkはこのhighlight.jsを統合しているのでコードブロックを記述すると自動的にhighlight.jsを呼び出してスニペット化してくれる:
 
 ```scala
+// このように普通にコードスニペットが記述できる
 import cats.implicits._
 import cats.data.Kleisli
 
@@ -92,48 +153,33 @@ val f = Kleisli { (n: Int) => List(n * 2, n * 3) }
 
 val pairs = List(42 -> "a", 43 -> "b", 44 -> "c")
 
-pairs.flatMap(f.first.run)
+* pairs.flatMap(f.first.run)
 // => List((84,a), (126,a), (86,b), (129,b), (88,c), (132,c)): scala.collection.immutable.List[scala.Tuple2[scala.Int, java.lang.String]]
 ```
 
----
-
-# JSON
-```json
-{
-  "subject": "acct:windymelt@mstdn.takuya-a.net",
-  "aliases": [
-    "https://mstdn.takuya-a.net/@windymelt",
-    "https://mstdn.takuya-a.net/users/windymelt"
-  ],
-  "links": [
-    {
-      "rel": "http://webfinger.net/rel/profile-page",
-      "type": "text/html",
-*      "href": "https://mstdn.takuya-a.net/@windymelt"
-    },
-    {
-      "rel": "self",
-      "type": "application/activity+json",
-      "href": "https://mstdn.takuya-a.net/users/windymelt"
-    },
-    {
-      "rel": "http://ostatus.org/schema/1.0/subscribe",
-      "template": "https://mstdn.takuya-a.net/authorize_interaction?uri={uri}"
-    }
-  ]
-}
-```
+特定の行のハイライトも可能。
 
 ---
 
-# table
-| a  | b  | c  |
-|:-:|:-:|:-:|
-| 12  | 34  | 56  |
-| 78  | 90  | 12  |
+# 画像表示も可能
+
+<img src="https://www.3qe.us/yuyuko.gif" alt=""/>
 
 ---
+
+# 共有
+
+- HTMLなのでそのままGitHub Pagesなどで公開可能
+- ブラウザからPDFでエクスポートすればPDF化も可能
+
+従来のツールよりも小回りが効く印象
+
+---
+
+# Copyrights
+
+- このスライドのHTMLはGPLで公開しています ご参考になさってください
+- https://github.com/windymelt/my-remark
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
